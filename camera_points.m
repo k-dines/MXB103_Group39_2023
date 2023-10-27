@@ -1,4 +1,5 @@
 function [tCamera, yCamera] = camera_points(t, y, Camera)
+% gets the t & y points 2 either side of 'y = camera'
 y1 =[];
 y2= [];
 t1= [];
