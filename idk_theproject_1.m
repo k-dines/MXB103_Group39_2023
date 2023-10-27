@@ -41,12 +41,16 @@ f1=@(t,y,v) v;
 f2=@(t,y,v) g-(C.*abs(v).*v)-max(0,(K*(y-L)));
 % Clear unused/excess variables
 clear c  k 
+
+
 %% Q1
 % NOTE: y=0 is the bridge
 
 [t,y,v,h]=RK4_2functions(f1,f2,a,b,alpha,beta,n);
 figure; plot(t,-y) 
 xlabel time(s); ylabel displacement(m); title("displacement over time of the bungee jumper");
+
+
 
 % a bounce could be concidered a bounce when acelleration is 0 and
 % velocity is postive
@@ -62,6 +66,9 @@ xlabel time(s); ylabel displacement(m); title("displacement over time of the bun
 %     end
 % end
 % total_bounces=sum(w)
+
+
+
 %% Q2
 % NOTE: Uses the v and t arrays from Q1
 % NOTE: abs(v) is used to check for max speed rather than velocity 
@@ -81,6 +88,7 @@ max_speed=max(speed) % I mean this also works??
 accel=forward_difference_2nd(v,t);
 gmax=max(accel)/g
 % no It does not exceed 2g
+
 %% Q3 Check
 % NOTE: This should most likely be removed from the final
 accel_check=zeros(1,length(v)-1);
@@ -90,6 +98,11 @@ end
 gmax_check1=max(accel_check)/g
 gmax_check2=max(f2(t,y,v))/g
 % Agrees with previous answers
+
+
+
+
+
 %% Q4 
 % abs(v) (or speed) needs to be used as we are looking for distance rather
 % than displacement 
@@ -97,6 +110,39 @@ total_distance=simpson(abs(v),t)
 
 %% Q5
 % NOTE: This should be able to be completed with an interpolation function
+Camera = H-D;
+
+[tCamera, yCamera] = camera_points(t, y, Camera); % get points either side of Camera height
+x = 100;
+yCamera1 = lagrange(X, Y, x); 
+
+
+
+
+%T5 = [3.3305,3.3315,3.332,3.3325];
+%H5 = [42.9832,42.9981,43.005,43.013];
+
+%displaced 
+
+% time is arround 2.66 seconds
+
 %% Q6
 % NOTE: This should be able to be completed with a root finding function
 
+%{
+L=25; % length of rope
+k=90; % spring constant of rope
+K=k/m;
+
+
+[t,y,v,h]=RK4_2functions(f1,f2,a,b,alpha,beta,n);
+
+
+temp = H-1.57;
+figure; plot(t,temp-y) 
+xlabel time(s); ylabel height(m); title("Height of the bungee jumper");
+
+lowest_height = temp - max(y)
+%}
+figure; plot(t,H-y) 
+xlabel time(s); ylabel height(m); title("Height of the bungee jumper");
