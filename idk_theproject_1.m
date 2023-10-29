@@ -74,7 +74,7 @@ xlabel time(s); ylabel displacement(m); title("displacement over time of the bun
 % NOTE: abs(v) is used to check for max speed rather than velocity 
 speed=abs(v);
 figure; plot(t,speed)
-xlabel time(s); ylabel speed(m/s); title("speed of the jumper at a givin time")
+xlabel time(s); ylabel speed(m/s); title("speed of the jumper at a given time")
 
 % Max speed occurs around t=2.6
 % Checking the array max_speed=20.0277
@@ -86,7 +86,10 @@ max_speed=max(speed) % I mean this also works??
 %% Q3
 % NOTE: Uses the v and t arrays from Q1 and the g value
 accel=forward_difference_2nd(v,t);
-gmax=max(accel)/g
+accel = abs(accel/g);
+figure; plot(t,accel)
+xlabel time(s); ylabel Acceleration(g); title("Absolute Acceleration of the jumper at a given time")
+gmax=max(accel) % gmax = 1.8711g
 % no It does not exceed 2g
 
 %% Q3 Check
@@ -95,8 +98,8 @@ accel_check=zeros(1,length(v)-1);
 for i=2:length(v)
     accel_check(i)=(v(i)-v(i-1))/(t(i)-t(i-1));
 end
-gmax_check1=max(accel_check)/g
-gmax_check2=max(f2(t,y,v))/g
+gmax_check1=max(abs(accel_check))/g
+gmax_check2=max(abs(f2(t,y,v)))/g
 % Agrees with previous answers
 
 
@@ -113,8 +116,8 @@ total_distance=simpson(abs(v),t)
 Camera = H-D;
 
 [tCamera, yCamera] = camera_points(t, y, Camera); % get points either side of Camera height
-x = 100;
-yCamera1 = lagrange(X, Y, x); 
+%x = 100;
+%yCamera1 = lagrange(X, Y, x); 
 
 
 
@@ -146,3 +149,4 @@ lowest_height = temp - max(y)
 %}
 figure; plot(t,H-y) 
 xlabel time(s); ylabel height(m); title("Height of the bungee jumper");
+
